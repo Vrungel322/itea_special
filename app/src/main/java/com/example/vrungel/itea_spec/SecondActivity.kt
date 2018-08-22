@@ -9,37 +9,30 @@ import android.widget.Toast
 import de.greenrobot.event.EventBus
 import kotlinx.android.synthetic.main.activity_second.btn
 import kotlinx.android.synthetic.main.activity_second.rv_items
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 
-class SecondActivity : AppCompatActivity() {
+class SecondActivity : AppCompatActivity(), SecondActivityView {
   lateinit var str: String
-  val adapter: Adapter = Adapter()
 
+  val adapter: Adapter = Adapter()
+  val presenter: SecondPresenter by lazy {
+    SecondPresenter(App.dataManager)
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_second)
+    presenter.attachView(this)
     str = intent.extras.getString("name_key")
     initUI()
 
-    val service = retrofit.create(PrivatBankService::class.java)
+    presenter.fetchCurrency()
 
-    service.fetchCurrency(5).enqueue(object : Callback<List<CurrencyItem>> {
-      override fun onFailure(call: Call<List<CurrencyItem>>?, t: Throwable?) {
+  }
 
-      }
 
-      override fun onResponse(call: Call<List<CurrencyItem>>?,
-          response: Response<List<CurrencyItem>>?) {
-        Log.wtf("TAG", response?.body()?.toString())
-      }
-    })
-
+  override fun showList(list: List<CurrencyItem>) {
+    Log.wtf("showList", list.toString())
   }
 
   fun initUI() {
