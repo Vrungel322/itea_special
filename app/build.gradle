@@ -42,4 +42,7 @@ dependencies {
   implementation "io.reactivex.rxjava2:rxjava:2.1.0"
   implementation "io.reactivex.rxjava2:rxandroid:2.0.1"
   implementation 'com.google.code.gson:gson:2.8.0'
+
+  implementation group: 'de.greenrobot', name: 'eventbus', version: "2.4.1"
+
 }
