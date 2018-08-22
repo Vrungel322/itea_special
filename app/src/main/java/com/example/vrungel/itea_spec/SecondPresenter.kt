@@ -1,12 +1,26 @@
 package com.example.vrungel.itea_spec
 
 import android.util.Log
+import com.arellomobile.mvp.InjectViewState
+import com.arellomobile.mvp.MvpPresenter
 
-class SecondPresenter(val dataManager: DataManager) : BasePresenter<SecondActivityView>() {
+@InjectViewState
+class SecondPresenter() : MvpPresenter<SecondActivityView>() {
+  //   var dataManager: DataManager = App.dataManager
+  lateinit var dataManager: DataManager
+
+  constructor(dm: DataManager) : this() {
+    dataManager = dm
+  }
+
+  override fun onFirstViewAttach() {
+    super.onFirstViewAttach()
+    fetchCurrency()
+  }
 
   fun fetchCurrency() {
     dataManager.fetchCurency(successCallback = { list ->
-      view?.showList(list)
+      viewState?.showList(list)
     }, failCallbacck = { errorMsg ->
       Log.wtf("SecondPresenter", errorMsg)
     })

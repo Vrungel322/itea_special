@@ -1,13 +1,8 @@
 package com.example.vrungel.itea_spec
 
-abstract class BasePresenter<V> {
-  var view: V? = null
+import com.arellomobile.mvp.MvpPresenter
+import com.arellomobile.mvp.MvpView
 
-  fun attachView(v: V) {
-    this.view = v
-  }
+abstract class BasePresenter<V : MvpView?> : MvpPresenter<V>() {
 
-  fun destroyView() {
-    this.view = null
-  }
 }
