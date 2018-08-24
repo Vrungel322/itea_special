@@ -1,7 +1,9 @@
 package com.example.vrungel.itea_spec
 
+import io.reactivex.Observable
+
 class DataManager {
- private val restHelper: RestHelper = RestHelper()
+  private val restHelper: RestHelper = RestHelper()
 
   companion object {
     fun film(): Film = Film("Film name", 5, "USA")
@@ -30,10 +32,8 @@ class DataManager {
     }
   }
 
-  fun fetchCurency(
-      successCallback: ((List<CurrencyItem>) -> Unit)? = null,
-      failCallbacck: ((String) -> Unit)? = null) {
-    restHelper.fetchCurency(successCallback = successCallback, failCallbacck = failCallbacck)
+  fun fetchCurency(): Observable<List<CurrencyItem>> {
+   return restHelper.fetchCurency()
   }
 
 }
